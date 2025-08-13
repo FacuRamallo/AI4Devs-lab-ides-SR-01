@@ -187,6 +187,8 @@ Una vez que los endpoints del backend estén definidos y (al menos inicialmente)
 - **Configuración de ESLint:**
   - Añadir un archivo `.eslintrc.json` con reglas básicas para TypeScript.
   - Configurar scripts en `package.json` para ejecutar ESLint.
+  - Comando para verificar errores `npm run lint`
+  - Commando para formatear automaticamente `npx eslint 'src/**/*.{ts,tsx}' --fix`
 
 - **Documentación con OpenAPI:**
   - Usar `swagger-jsdoc` para generar documentación automática de los endpoints.

@@ -93,3 +93,25 @@ Para detener el contenedor Docker, ejecuta el siguiente comando:
 ```
 docker-compose down
 ```
+
+## Formato de Código según Mejores Prácticas
+
+Para garantizar un código limpio y consistente, se utiliza ESLint con las mejores prácticas para TypeScript. A continuación, se detallan los comandos disponibles:
+
+### Verificar Errores de Linting
+Ejecuta el siguiente comando para analizar el código y mostrar advertencias o errores:
+
+```bash
+npm run lint
+```
+
+### Formatear Código Automáticamente
+Para corregir automáticamente los problemas de formato, ejecuta:
+
+```bash
+npx eslint 'src/**/*.{ts,tsx}' --fix
+```
+
+### Configuración
+- El archivo `.eslintrc.json` contiene las reglas globales para el proyecto.
+- Los scripts de linting están configurados en los `package.json` de los directorios `backend` y `frontend`.
