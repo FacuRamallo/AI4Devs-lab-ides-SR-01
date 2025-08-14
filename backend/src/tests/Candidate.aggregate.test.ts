@@ -1,8 +1,8 @@
 import { Candidate } from '../domain/aggregates/Candidate.aggregate';
 import { CandidateId } from '../domain/value-objects/CandidateId.vo';
 import { Email } from '../domain/value-objects/Email.vo';
-import { Telefono } from '../domain/value-objects/Telefono.vo';
-import { Direccion } from '../domain/value-objects/Direccion.vo';
+import { Phone } from '../domain/value-objects/Phone.vo';
+import { Address } from '../domain/value-objects/Address.vo';
 import { WorkExperience } from '../domain/value-objects/WorkExperience.vo';
 
 describe('Candidate Aggregate', () => {
@@ -10,8 +10,8 @@ describe('Candidate Aggregate', () => {
     const candidate = new Candidate(
       new CandidateId('123'),
       new Email('test@example.com'),
-      new Telefono('+1234567890'),
-      new Direccion('123 Main St')
+      new Phone('+1234567890'),
+      new Address('123 Main St')
     );
 
     const experience = new WorkExperience('Company A', 'Developer', new Date('2020-01-01'));
@@ -24,8 +24,8 @@ describe('Candidate Aggregate', () => {
     const candidate = new Candidate(
       new CandidateId('123'),
       new Email('test@example.com'),
-      new Telefono('+1234567890'),
-      new Direccion('123 Main St')
+      new Phone('+1234567890'),
+      new Address('123 Main St')
     );
 
     candidate.addWorkExperience(new WorkExperience('Company A', 'Developer', new Date('2020-01-01')));
@@ -41,8 +41,8 @@ describe('Candidate Aggregate', () => {
     const candidate = new Candidate(
       new CandidateId('123'),
       new Email('test@example.com'),
-      new Telefono('+1234567890'),
-      new Direccion('123 Main St')
+      new Phone('+1234567890'),
+      new Address('123 Main St')
     );
 
     candidate.assignCv('http://example.com/cv.pdf');
@@ -54,8 +54,8 @@ describe('Candidate Aggregate', () => {
     const candidate = new Candidate(
       new CandidateId('123'),
       new Email('test@example.com'),
-      new Telefono('+1234567890'),
-      new Direccion('123 Main St')
+      new Phone('+1234567890'),
+      new Address('123 Main St')
     );
 
     expect(() => {

@@ -1,15 +1,15 @@
 import { CandidateId } from '../value-objects/CandidateId.vo';
 import { Email } from '../value-objects/Email.vo';
-import { Telefono } from '../value-objects/Telefono.vo';
-import { Direccion } from '../value-objects/Direccion.vo';
+import { Phone } from '../value-objects/Phone.vo';
+import { Address } from '../value-objects/Address.vo';
 import { WorkExperience } from '../value-objects/WorkExperience.vo';
 import { Education } from '../value-objects/Education.vo';
 
 export class Candidate {
   private readonly id: CandidateId;
   private email: Email;
-  private telefono: Telefono;
-  private direccion: Direccion;
+  private phone: Phone;
+  private address: Address;
   private workExperiences: WorkExperience[] = [];
   private education: Education[] = [];
   private cvUrl?: string;
@@ -17,13 +17,13 @@ export class Candidate {
   constructor(
     id: CandidateId,
     email: Email,
-    telefono: Telefono,
-    direccion: Direccion
+    phone: Phone,
+    address: Address
   ) {
     this.id = id;
     this.email = email;
-    this.telefono = telefono;
-    this.direccion = direccion;
+    this.phone = phone;
+    this.address = address;
   }
 
   public addWorkExperience(experience: WorkExperience): void {
@@ -43,8 +43,8 @@ export class Candidate {
   public getDetails(): {
     id: string;
     email: string;
-    telefono: string;
-    direccion: string;
+    phone: string;
+    address: string;
     workExperiences: WorkExperience[];
     education: Education[];
     cvUrl?: string;
@@ -52,8 +52,8 @@ export class Candidate {
     return {
       id: this.id.value,
       email: this.email.value,
-      telefono: this.telefono.value,
-      direccion: this.direccion.value,
+      phone: this.phone.value,
+      address: this.address.value,
       workExperiences: this.workExperiences,
       education: this.education,
       cvUrl: this.cvUrl,
