@@ -30,6 +30,9 @@ This project is a full-stack application designed to track talent management. It
    - Use descriptive test names and organize tests in the `tests/` folder.
    - Ensure 100% test coverage for critical components and functions.
 
+## General Guidelines
+- Always write code, comments, and documentation in English.
+
 ## Terminal Command Execution
 - Always check the current directory before executing terminal commands.
 - Use relative paths to ensure commands are executed in the correct context.
