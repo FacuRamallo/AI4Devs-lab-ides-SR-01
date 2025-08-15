@@ -6,7 +6,16 @@ import { Phone } from '../domain/value-objects/Phone.vo';
 import { Address } from '../domain/value-objects/Address.vo';
 
 export class PostgreSqlCandidateRepository implements ICandidateRepository {
-  constructor(private readonly database: any) {}
+  private static instance: PostgreSqlCandidateRepository;
+
+  private constructor(private readonly database: any) {}
+
+  static getInstance(database: any): PostgreSqlCandidateRepository {
+    if (!PostgreSqlCandidateRepository.instance) {
+      PostgreSqlCandidateRepository.instance = new PostgreSqlCandidateRepository(database);
+    }
+    return PostgreSqlCandidateRepository.instance;
+  }
 
   async findByEmail(email: Email): Promise<Candidate | null> {
     const candidateData = await this.database.findOne({ where: { email: email.value } });

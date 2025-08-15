@@ -1,13 +1,11 @@
 import type { Request, Response, NextFunction } from 'express';
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv';
+import { createCandidateController } from './infrastructure/configuration/dependencyContainer';
 
 dotenv.config();
-const prisma = new PrismaClient();
 
 export const app = express();
-export default prisma;
 
 const port = process.env.PORT || 3000;
 
@@ -20,6 +18,12 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   res.type('text/plain');
   res.status(500).send('Something broke!');
 });
+
+const router = express.Router();
+
+router.post('/api/v1/candidates', (req, res) => createCandidateController.handle(req, res));
+
+app.use(router);
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, () => {

@@ -1,14 +1,22 @@
 import { Request, Response } from 'express';
-import { CreateCandidateUseCase } from '../CreateCandidate.usecase';
+import { CreateCandidateUseCase } from '../../application/CreateCandidate.usecase';
 
 export class CreateCandidateController {
-  constructor(private readonly createCandidateUseCase: CreateCandidateUseCase) {}
+  private static instance: CreateCandidateController;
+
+  private constructor(private readonly createCandidateUseCase: CreateCandidateUseCase) {}
+
+  static getInstance(createCandidateUseCase: CreateCandidateUseCase): CreateCandidateController {
+    if (!CreateCandidateController.instance) {
+      CreateCandidateController.instance = new CreateCandidateController(createCandidateUseCase);
+    }
+    return CreateCandidateController.instance;
+  }
 
   async handle(req: Request, res: Response): Promise<Response> {
     try {
       const { email, name, phone } = req.body;
 
-      // Ejecutar el caso de uso
       await this.createCandidateUseCase.execute({ email, name, phone });
 
       return res.status(201).json({ message: 'Candidate created successfully' });

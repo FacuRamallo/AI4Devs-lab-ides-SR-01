@@ -3,7 +3,6 @@ import { ICandidateRepository } from '../domain/ICandidateRepository.port';
 import { Candidate } from '../domain/aggregates/Candidate.aggregate';
 import { Email } from '../domain/value-objects/Email.vo';
 
-// Mock del repositorio
 const mockCandidateRepository: jest.Mocked<ICandidateRepository> = {
   findByEmail: jest.fn(),
   save: jest.fn(),
@@ -18,15 +17,14 @@ describe('CreateCandidateUseCase', () => {
     createCandidateUseCase = new CreateCandidateUseCase(mockCandidateRepository);
   });
 
-  it('debería lanzar un error si ya existe un candidato con el mismo email', async () => {
-    // Arrange
+  it('should throw an error if a candidate with the same email already exists', async () => {
     const existingEmail = new Email('test@example.com');
     mockCandidateRepository.findByEmail.mockResolvedValue(
       Candidate.create({
-        id: expect.anything(), // Mocked CandidateId
+        id: expect.anything(),
         email: existingEmail,
-        phone: expect.anything(), // Mocked Phone
-        address: expect.anything(), // Mocked Address
+        phone: expect.anything(),
+        address: expect.anything(),
       })
     );
 
@@ -36,15 +34,13 @@ describe('CreateCandidateUseCase', () => {
       phone: '123456789',
     };
 
-    // Act & Assert
     await expect(createCandidateUseCase.execute(command)).rejects.toThrow(
       'A candidate with this email already exists.'
     );
     expect(mockCandidateRepository.findByEmail).toHaveBeenCalledWith(existingEmail);
   });
 
-  it('debería crear correctamente los objetos de valor y guardar el candidato', async () => {
-    // Arrange
+  it('should correctly create value objects and save the candidate', async () => {
     const newEmail = new Email('new@example.com');
     mockCandidateRepository.findByEmail.mockResolvedValue(null);
 
@@ -54,10 +50,8 @@ describe('CreateCandidateUseCase', () => {
       phone: '987654321',
     };
 
-    // Act
     await createCandidateUseCase.execute(command);
 
-    // Assert
     expect(mockCandidateRepository.findByEmail).toHaveBeenCalledWith(newEmail);
     expect(mockCandidateRepository.save).toHaveBeenCalled();
   });

@@ -1,8 +1,7 @@
-import { CreateCandidateController } from '../application/controllers/CreateCandidate.controller';
+import { CreateCandidateController } from '../infrastructure/controllers/CreateCandidate.controller';
 import { CreateCandidateUseCase } from '../application/CreateCandidate.usecase';
 import { Request, Response } from 'express';
 
-// Mock del caso de uso
 const mockCreateCandidateUseCase = new CreateCandidateUseCase({
   findByEmail: jest.fn(),
   save: jest.fn(),
@@ -17,7 +16,7 @@ describe('CreateCandidateController', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    controller = new CreateCandidateController(mockCreateCandidateUseCase);
+    controller = CreateCandidateController.getInstance(mockCreateCandidateUseCase);
 
     req = {
       body: {
@@ -33,11 +32,9 @@ describe('CreateCandidateController', () => {
     };
   });
 
-  it('debería devolver 201 si el candidato se crea correctamente', async () => {
-    // Act
+  it('should return 201 if the candidate is created successfully', async () => {
     await controller.handle(req as Request, res as Response);
 
-    // Assert
     expect(mockCreateCandidateUseCase.execute).toHaveBeenCalledWith({
       email: 'test@example.com',
       name: 'John Doe',
@@ -47,14 +44,11 @@ describe('CreateCandidateController', () => {
     expect(res.json).toHaveBeenCalledWith({ message: 'Candidate created successfully' });
   });
 
-  it('debería devolver 400 si ocurre un error', async () => {
-    // Arrange
+  it('should return 400 if an error occurs', async () => {
     jest.spyOn(mockCreateCandidateUseCase, 'execute').mockRejectedValue(new Error('Validation error'));
 
-    // Act
     await controller.handle(req as Request, res as Response);
 
-    // Assert
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({ error: 'Validation error' });
   });
