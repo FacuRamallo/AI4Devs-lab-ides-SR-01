@@ -2,8 +2,9 @@ import 'tsconfig-paths/register.js';
 import express from 'express';
 import dotenv from 'dotenv';
 import type { Request, Response, NextFunction } from 'express';
-import { prisma, createCandidateController } from '@infrastructure/configuration/dependencyContainer.js';
+import { prisma, createCandidateController, uploadCandidateCvController } from '@infrastructure/configuration/dependencyContainer.js';
 import { exec } from 'child_process';
+import multer from 'multer';
 
 dotenv.config();
 
@@ -22,8 +23,10 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 });
 
 const router = express.Router();
+const upload = multer();
 
 router.post('/api/v1/candidates', (req, res) => createCandidateController.handle(req, res));
+router.post('/api/v1/candidates/:candidateId/cv', upload.single('file'), (req, res) => uploadCandidateCvController.handle(req, res));
 
 app.use(router);
 
