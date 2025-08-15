@@ -7,37 +7,59 @@ import { Education } from '../value-objects/Education.vo';
 
 export class Candidate {
   private readonly id: CandidateId;
-  private email: Email;
-  private phone: Phone;
-  private address: Address;
-  private workExperiences: WorkExperience[] = [];
-  private education: Education[] = [];
-  private cvUrl?: string;
+  private readonly email: Email;
+  private readonly phone: Phone;
+  private readonly address: Address;
+  private readonly workExperiences: WorkExperience[] = [];
+  private readonly education: Education[] = [];
+  private readonly cvUrl?: string;
 
   constructor(
     id: CandidateId,
     email: Email,
     phone: Phone,
-    address: Address
+    address: Address,
+    workExperiences: WorkExperience[] = [],
+    education: Education[] = [],
+    cvUrl?: string
   ) {
     this.id = id;
     this.email = email;
     this.phone = phone;
     this.address = address;
-  }
-
-  public addWorkExperience(experience: WorkExperience): void {
-    if (this.workExperiences.length >= 3) {
-      throw new Error('A candidate cannot have more than 3 work experiences.');
-    }
-    this.workExperiences.push(experience);
-  }
-
-  public assignCv(cvUrl: string): void {
-    if (!cvUrl || cvUrl.trim().length === 0) {
-      throw new Error('CV URL cannot be empty.');
-    }
+    this.workExperiences = workExperiences;
+    this.education = education;
     this.cvUrl = cvUrl;
+  }
+
+  public addWorkExperience(experience: WorkExperience): Candidate {
+    if (this.workExperiences.length >= 3) {
+      throw new MaxWorkExperienceError('A candidate cannot have more than 3 work experiences.');
+    }
+    return new Candidate(
+      this.id,
+      this.email,
+      this.phone,
+      this.address,
+      [...this.workExperiences, experience],
+      this.education,
+      this.cvUrl
+    );
+  }
+
+  public assignCv(cvUrl: string): Candidate {
+    if (!cvUrl || cvUrl.trim().length === 0) {
+      throw new InvalidCvUrlError('CV URL cannot be empty.');
+    }
+    return new Candidate(
+      this.id,
+      this.email,
+      this.phone,
+      this.address,
+      this.workExperiences,
+      this.education,
+      cvUrl
+    );
   }
 
   public getDetails(): {
@@ -58,5 +80,19 @@ export class Candidate {
       education: this.education,
       cvUrl: this.cvUrl,
     };
+  }
+}
+
+export class MaxWorkExperienceError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'MaxWorkExperienceError';
+  }
+}
+
+export class InvalidCvUrlError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'InvalidCvUrlError';
   }
 }

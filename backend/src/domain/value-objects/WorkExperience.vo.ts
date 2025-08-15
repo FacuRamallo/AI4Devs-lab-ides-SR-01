@@ -6,13 +6,13 @@ export class WorkExperience {
 
   constructor(company: string, role: string, startDate: Date, endDate?: Date) {
     if (!company || company.trim().length === 0) {
-      throw new Error('Company name cannot be empty');
+      throw new InvalidWorkExperienceError('Company name cannot be empty');
     }
     if (!role || role.trim().length === 0) {
-      throw new Error('Role cannot be empty');
+      throw new InvalidWorkExperienceError('Role cannot be empty');
     }
     if (endDate && endDate < startDate) {
-      throw new Error('End date cannot be before start date');
+      throw new InvalidWorkExperienceError('End date cannot be before start date');
     }
 
     this.company = company;
@@ -28,5 +28,21 @@ export class WorkExperience {
       startDate: this.startDate,
       endDate: this.endDate,
     };
+  }
+
+  public equals(other: WorkExperience): boolean {
+    return (
+      this.company === other.company &&
+      this.role === other.role &&
+      this.startDate.getTime() === other.startDate.getTime() &&
+      this.endDate?.getTime() === other.endDate?.getTime()
+    );
+  }
+}
+
+export class InvalidWorkExperienceError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'InvalidWorkExperienceError';
   }
 }

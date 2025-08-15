@@ -1,14 +1,25 @@
 export class Address {
-  private readonly direccion: string;
+  private readonly address: string;
 
-  constructor(direccion: string) {
-    if (!direccion || direccion.trim().length === 0) {
-      throw new Error('Address cannot be empty');
+  constructor(address: string) {
+    if (!address || address.trim().length === 0) {
+      throw new InvalidAddressError('Address cannot be empty');
     }
-    this.direccion = direccion;
+    this.address = address;
   }
 
   public get value(): string {
-    return this.direccion;
+    return this.address;
+  }
+
+  public equals(other: Address): boolean {
+    return this.address === other.address;
+  }
+}
+
+export class InvalidAddressError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = 'InvalidAddressError';
   }
 }
