@@ -9,8 +9,13 @@ A continuación se presentan los tickets de desarrollo en el orden secuencial re
 
 El desarrollo del backend debe completarse primero, ya que el frontend dependerá de los contratos y endpoints definidos aquí.
 
-### **TICKET 1: Modelado del Dominio y sus Contratos (Puertos)**
+---
+# PROMT 1
 
+## ROL - eres ingeniero de software senior y serás my asistente
+
+## Tarea - desarrollar el siguiente ticket
+### **TICKET 1: Modelado del Dominio y sus Contratos (Puertos)**
 > **Asignado a:** Desarrollador Backend
 > **Épica:** Gestión de Candidatos
 >
@@ -40,6 +45,13 @@ El desarrollo del backend debe completarse primero, ya que el frontend depender�
 > * ✅ Las reglas de negocio (ej: límite de 3 experiencias) están encapsuladas como métodos que modifican el estado interno del Agregado.
 > * ✅ El puerto `ICandidateRepository` está definido para operar únicamente sobre el agregado `Candidate`, asegurando que las transacciones sean atómicas para todo el agregado.
 > * ✅ Los Objetos de Valor contienen su propia lógica de validación, fallando en su creación si los datos son inválidos.
+
+## Lo que espero de ti:
+> Quiero que desarrolles un "paso a paso" para ejecutar este ticket. Y una vez definidos los pasos empezaremos a trabajar tu siendo mi assistente
+> En cada paso seguiremos una forma de trabajo guiada por TDD
+> Preguntame lo que necesites en cada paso para obtener el mejor resultado
+
+---
 
 ### **TICKET 2: Implementar Caso de Uso y Adaptadores para crear el Agregado `Candidate`**
 

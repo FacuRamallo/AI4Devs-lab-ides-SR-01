@@ -1,11 +1,21 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export class CandidateId {
   private readonly id: string;
 
-  constructor(id: string) {
+  private constructor(id: string) {
     if (!id || id.trim().length === 0) {
       throw new InvalidCandidateIdError('CandidateId cannot be empty');
     }
     this.id = id;
+  }
+
+  public static create(): CandidateId {
+    return new CandidateId(uuidv4());
+  }
+
+  public static from(id: string): CandidateId {
+    return new CandidateId(id);
   }
 
   public get value(): string {

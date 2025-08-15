@@ -8,7 +8,7 @@ import { WorkExperience } from '../domain/value-objects/WorkExperience.vo';
 describe('Candidate Aggregate', () => {
   it('should add a work experience if less than 3 exist', () => {
     let candidate = new Candidate(
-      new CandidateId('123'),
+      CandidateId.from('123'),
       new Email('test@example.com'),
       new Phone('+1234567890'),
       new Address('123 Main St')
@@ -22,7 +22,7 @@ describe('Candidate Aggregate', () => {
 
   it('should throw an error if adding more than 3 work experiences', () => {
     let candidate = new Candidate(
-      new CandidateId('123'),
+      CandidateId.from('123'),
       new Email('test@example.com'),
       new Phone('+1234567890'),
       new Address('123 Main St')
@@ -40,7 +40,7 @@ describe('Candidate Aggregate', () => {
 
   it('should assign a CV URL', () => {
     let candidate = new Candidate(
-      new CandidateId('123'),
+      CandidateId.from('123'),
       new Email('test@example.com'),
       new Phone('+1234567890'),
       new Address('123 Main St')
@@ -53,7 +53,7 @@ describe('Candidate Aggregate', () => {
 
   it('should throw an error if CV URL is empty', () => {
     const candidate = new Candidate(
-      new CandidateId('123'),
+      CandidateId.from('123'),
       new Email('test@example.com'),
       new Phone('+1234567890'),
       new Address('123 Main St')

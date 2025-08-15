@@ -32,6 +32,26 @@ export class Candidate {
     this.cvUrl = cvUrl;
   }
 
+  public static create(params: {
+    id: CandidateId;
+    email: Email;
+    phone: Phone;
+    address: Address;
+    workExperiences?: WorkExperience[];
+    education?: Education[];
+    cvUrl?: string;
+  }): Candidate {
+    return new Candidate(
+      params.id,
+      params.email,
+      params.phone,
+      params.address,
+      params.workExperiences || [],
+      params.education || [],
+      params.cvUrl
+    );
+  }
+
   public addWorkExperience(experience: WorkExperience): Candidate {
     if (this.workExperiences.length >= 3) {
       throw new MaxWorkExperienceError('A candidate cannot have more than 3 work experiences.');
