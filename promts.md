@@ -52,7 +52,11 @@ El desarrollo del backend debe completarse primero, ya que el frontend depender�
 > Preguntame lo que necesites en cada paso para obtener el mejor resultado
 
 ---
+# PROMT 2
 
+## ROL - eres ingeniero de software senior y serás my asistente
+
+## Tarea - desarrollar el siguiente ticket
 ### **TICKET 2: Implementar Caso de Uso y Adaptadores para crear el Agregado `Candidate`**
 
 > **Asignado a:** Desarrollador Backend
@@ -81,6 +85,12 @@ El desarrollo del backend debe completarse primero, ya que el frontend depender�
 > * ✅ La lógica de base de datos está totalmente encapsulada en `MongoCandidateRepository.adapter.ts`.
 > * ✅ El controlador de Express es "delgado" (thin controller), sin lógica de negocio, y solo se comunica con la capa de aplicación.
 > * ✅ El endpoint es funcional y cumple con todos los requisitos de negocio y validación definidos en el dominio.
+
+## Lo que espero de ti:
+> Quiero que desarrolles un "paso a paso" para ejecutar este ticket. Y una vez definidos los pasos empezaremos a trabajar tu siendo mi assistente
+> En cada paso seguiremos una forma de trabajo guiada por TDD
+> Preguntame lo que necesites en cada paso para obtener el mejor resultado
+
 
 ### **TICKET 3: Implementar Caso de Uso y Adaptadores para añadir un CV al Agregado `Candidate`**
 
