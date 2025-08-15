@@ -1,12 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./",
+    "paths": {
+      "@infrastructure/*": ["src/infrastructure/*"],
+      "@domain/*": ["src/domain/*"],
+      "@application/*": ["src/application/*"]
+    },
+    "declaration": true,
+    "allowJs": true,
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]

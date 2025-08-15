@@ -1,6 +1,6 @@
 import request from 'supertest';
-import { app } from '../index';
-import { prisma } from '../infrastructure/configuration/dependencyContainer';
+import { app } from '../index.js';
+import { prisma } from '@infrastructure/configuration/dependencyContainer.js';
 import { Server } from 'http';
 
 let server: Server;

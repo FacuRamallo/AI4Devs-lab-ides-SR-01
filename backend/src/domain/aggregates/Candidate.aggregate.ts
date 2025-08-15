@@ -1,9 +1,9 @@
-import { CandidateId } from '../value-objects/CandidateId.vo';
-import { Email } from '../value-objects/Email.vo';
-import { Phone } from '../value-objects/Phone.vo';
-import { Address } from '../value-objects/Address.vo';
-import { WorkExperience } from '../value-objects/WorkExperience.vo';
-import { Education } from '../value-objects/Education.vo';
+import { CandidateId } from '../value-objects/CandidateId.vo.js';
+import { Email } from '../value-objects/Email.vo.js';
+import { Phone } from '../value-objects/Phone.vo.js';
+import { Address } from '../value-objects/Address.vo.js';
+import { WorkExperience } from '../value-objects/WorkExperience.vo.js';
+import { Education } from '../value-objects/Education.vo.js';
 
 export class Candidate {
   private readonly id: CandidateId;

@@ -1,7 +1,7 @@
-import { CreateCandidateUseCase } from '../application/CreateCandidate.usecase';
-import { ICandidateRepository } from '../domain/ICandidateRepository.port';
-import { Candidate } from '../domain/aggregates/Candidate.aggregate';
-import { Email } from '../domain/value-objects/Email.vo';
+import { CreateCandidateUseCase } from '@application/CreateCandidate.usecase.js';
+import { ICandidateRepository } from '@domain/ICandidateRepository.port.js';
+import { Candidate } from '@domain/aggregates/Candidate.aggregate.js';
+import { Email } from '@domain/value-objects/Email.vo.js';
 
 const mockCandidateRepository: jest.Mocked<ICandidateRepository> = {
   findByEmail: jest.fn(),

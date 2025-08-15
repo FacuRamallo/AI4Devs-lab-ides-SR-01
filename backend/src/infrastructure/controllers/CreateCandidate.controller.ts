@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { CreateCandidateUseCase } from '../../application/CreateCandidate.usecase';
+import { CreateCandidateUseCase } from '@application/CreateCandidate.usecase.js';
 
 export class CreateCandidateController {
   private static instance: CreateCandidateController;

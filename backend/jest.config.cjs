@@ -1,8 +1,16 @@
 module.exports = {
-  roots: ['<rootDir>/src'],
+  roots: ['<rootDir>/dist'],
+  extensionsToTreatAsEsm: ['.ts'],
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.tsx?$': ['ts-jest', { useESM: true }],
   },
-  testRegex: '(/tests/.*|(\\.|/)(test|spec))\\.tsx?$',
+  testRegex: '(/tests/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  moduleNameMapper: {
+    '^@infrastructure/(.*)\\.js$': '<rootDir>/infrastructure/$1',
+    '^@domain/(.*)\\.js$': '<rootDir>/domain/$1',
+    '^@application/(.*)\\.js$': '<rootDir>/application/$1'
+  },
+  testPathIgnorePatterns: ['\\.d\\.ts$'],
 };

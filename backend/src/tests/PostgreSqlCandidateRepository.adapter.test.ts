@@ -1,13 +1,15 @@
-import { PostgreSqlCandidateRepository } from '../infrastructure/PostgreSqlCandidateRepository.adapter';
-import { Candidate } from '../domain/aggregates/Candidate.aggregate';
-import { Email } from '../domain/value-objects/Email.vo';
-import { CandidateId } from '../domain/value-objects/CandidateId.vo';
-import { Phone } from '../domain/value-objects/Phone.vo';
-import { Address } from '../domain/value-objects/Address.vo';
+import { PostgreSqlCandidateRepository } from '@infrastructure/PostgreSqlCandidateRepository.adapter.js';
+import { Candidate } from '@domain/aggregates/Candidate.aggregate.js';
+import { Email } from '@domain/value-objects/Email.vo.js';
+import { CandidateId } from '@domain/value-objects/CandidateId.vo.js';
+import { Phone } from '@domain/value-objects/Phone.vo.js';
+import { Address } from '@domain/value-objects/Address.vo.js';
 
 const mockDatabase: any = {
-  findOne: jest.fn(),
-  save: jest.fn(),
+  candidate: {
+    findUnique: jest.fn(),
+    upsert: jest.fn(),
+  },
 };
 
 describe('PostgreSqlCandidateRepository', () => {
@@ -28,7 +30,7 @@ describe('PostgreSqlCandidateRepository', () => {
       phone: phone.value,
       address: address.value
     };
-    mockDatabase.findOne.mockResolvedValue(candidateData);
+    mockDatabase.candidate.findUnique.mockResolvedValue(candidateData);
 
     const candidate = await repository.findByEmail(email);
 
@@ -39,12 +41,12 @@ describe('PostgreSqlCandidateRepository', () => {
 
   it('should return null if no matching email exists', async () => {
     const email = new Email('nonexistent@example.com');
-    mockDatabase.findOne.mockResolvedValue(null);
+    mockDatabase.candidate.findUnique.mockResolvedValue(null);
 
     const candidate = await repository.findByEmail(email);
 
     expect(candidate).toBeNull();
-    expect(mockDatabase.findOne).toHaveBeenCalledWith({ where: { email: email.value } });
+    expect(mockDatabase.candidate.findUnique).toHaveBeenCalledWith({ where: { email: email.value } });
   });
 
   it('should save a candidate correctly', async () => {
@@ -59,9 +61,17 @@ describe('PostgreSqlCandidateRepository', () => {
 
     await repository.save(candidate);
 
-    expect(mockDatabase.save).toHaveBeenCalledWith(expect.objectContaining({
-      id: candidate.getDetails().id,
-      email: candidate.getDetails().email,
+    expect(mockDatabase.candidate.upsert).toHaveBeenCalledWith(expect.objectContaining({
+      where: { id: candidate.getDetails().id },
+      update: expect.objectContaining({
+        email: candidate.getDetails().email,
+        phone: candidate.getDetails().phone,
+      }),
+      create: expect.objectContaining({
+        id: candidate.getDetails().id,
+        email: candidate.getDetails().email,
+        phone: candidate.getDetails().phone,
+      }),
     }));
   });
 });

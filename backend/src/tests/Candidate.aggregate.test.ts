@@ -1,9 +1,9 @@
-import { Candidate } from '../domain/aggregates/Candidate.aggregate';
-import { CandidateId } from '../domain/value-objects/CandidateId.vo';
-import { Email } from '../domain/value-objects/Email.vo';
-import { Phone } from '../domain/value-objects/Phone.vo';
-import { Address } from '../domain/value-objects/Address.vo';
-import { WorkExperience } from '../domain/value-objects/WorkExperience.vo';
+import { Candidate } from '@domain/aggregates/Candidate.aggregate.js';
+import { CandidateId } from '@domain/value-objects/CandidateId.vo.js';
+import { Email } from '@domain/value-objects/Email.vo.js';
+import { Phone } from '@domain/value-objects/Phone.vo.js';
+import { Address } from '@domain/value-objects/Address.vo.js';
+import { WorkExperience } from '@domain/value-objects/WorkExperience.vo.js';
 
 describe('Candidate Aggregate', () => {
   it('should add a work experience if less than 3 exist', () => {

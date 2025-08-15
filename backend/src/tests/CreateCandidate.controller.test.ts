@@ -1,5 +1,5 @@
-import { CreateCandidateController } from '../infrastructure/controllers/CreateCandidate.controller';
-import { CreateCandidateUseCase } from '../application/CreateCandidate.usecase';
+import { CreateCandidateController } from '@infrastructure/controllers/CreateCandidate.controller.js';
+import { CreateCandidateUseCase } from '@application/CreateCandidate.usecase.js';
 import { Request, Response } from 'express';
 
 const mockCreateCandidateUseCase = new CreateCandidateUseCase({
