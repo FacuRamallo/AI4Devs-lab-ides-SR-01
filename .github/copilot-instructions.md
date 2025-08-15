@@ -30,6 +30,11 @@ This project is a full-stack application designed to track talent management. It
    - Use descriptive test names and organize tests in the `tests/` folder.
    - Ensure 100% test coverage for critical components and functions.
 
+3. **Import Path Style**:
+   - Always use the `paths` mapping defined in `tsconfig.json` for imports.
+   - Follow the format `@xxxmapping/*/*.js` as specified in the `paths` configuration.
+   - Example: Use `@infrastructure/S3FileStorage.adapter.js` instead of relative paths like `../../infrastructure/S3FileStorage.adapter`.
+
 ## General Guidelines
 - Always write code, comments, and documentation in English.
 

@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config({ path: '.env.test' });
+
 module.exports = {
   roots: ['<rootDir>/dist'],
   extensionsToTreatAsEsm: ['.ts'],
@@ -13,4 +16,5 @@ module.exports = {
     '^@application/(.*)\\.js$': '<rootDir>/application/$1'
   },
   testPathIgnorePatterns: ['\\.d\\.ts$'],
+  setupFiles: ['<rootDir>/jest.setup.js'],
 };

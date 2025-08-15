@@ -10,3 +10,20 @@ services:
       POSTGRES_DB: LTIdb
     ports:
       - 5432:5432
+      
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+      - "4572:4572"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - ./localstack-init.sh:/etc/localstack/init/ready.d/localstack-init.sh
+    environment:
+      - SERVICES=s3
+      - AWS_DEFAULT_REGION=us-east-1
+      - DEBUG=1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_CONFIG_FILE=/dev/null
+      - AWS_SHARED_CREDENTIALS_FILE=/dev/null

@@ -21,6 +21,7 @@
     "dependencies": {
         "@prisma/client": "^5.13.0",
         "@types/uuid": "^10.0.0",
+        "aws-sdk": "^2.1692.0",
         "dotenv": "^16.4.5",
         "express": "^4.19.2",
         "swagger-jsdoc": "^6.2.8",
@@ -37,7 +38,7 @@
         "@types/supertest": "^6.0.2",
         "@typescript-eslint/eslint-plugin": "^8.39.1",
         "@typescript-eslint/parser": "^8.39.1",
-        "babel-jest": "^30.0.5",
+        "babel-jest": "^29.7.0",
         "eslint": "^9.2.0",
         "eslint-config-prettier": "^9.1.0",
         "eslint-plugin-prettier": "^5.5.4",
