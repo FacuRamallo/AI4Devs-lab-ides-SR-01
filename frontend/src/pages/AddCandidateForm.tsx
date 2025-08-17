@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import { addCandidate } from '../services/candidateService';
 
 const AddCandidateForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -15,9 +16,14 @@ const AddCandidateForm: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form Data Submitted:', formData);
+    try {
+      const result = await addCandidate(formData);
+      console.log('Candidate added successfully:', result);
+    } catch (error) {
+      console.error('Failed to add candidate:', error);
+    }
   };
 
   return (
