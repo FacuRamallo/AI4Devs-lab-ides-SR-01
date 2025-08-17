@@ -34,16 +34,31 @@ describe('CreateCandidateController', () => {
   });
 
   it('should return 201 if the candidate is created successfully', async () => {
-    await controller.handle(req as Request, res as Response);
+    (mockCreateCandidateUseCase.execute as jest.Mock).mockResolvedValue('123');
 
-    expect(mockCreateCandidateUseCase.execute).toHaveBeenCalledWith({
+    req.body = {
+      id: undefined,
       email: 'test@example.com',
       firstName: 'John',
       lastName: 'Doe',
       phone: '123456789',
+      address: '123 Main St',
+      cvUrl: 'http://example.com/cv.pdf',
+    };
+
+    await controller.handle(req as Request, res as Response);
+
+    expect(mockCreateCandidateUseCase.execute).toHaveBeenCalledWith({
+      id: undefined,
+      email: 'test@example.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      phone: '123456789',
+      address: '123 Main St',
+      cvUrl: 'http://example.com/cv.pdf',
     });
     expect(res.status).toHaveBeenCalledWith(201);
-    expect(res.json).toHaveBeenCalledWith({ message: 'Candidate created successfully' });
+    expect(res.json).toHaveBeenCalledWith({ id: '123' });
   });
 
   it('should return 400 if an error occurs', async () => {

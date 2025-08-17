@@ -3,6 +3,9 @@ import { ICandidateRepository } from '@domain/ICandidateRepository.port.js';
 import { Candidate } from '@domain/aggregates/Candidate.aggregate.js';
 import { Email } from '@domain/value-objects/Email.vo.js';
 import { Name } from '@domain/value-objects/Name.vo.js';
+import { Phone } from '@domain/value-objects/Phone.vo.js';
+import { Address } from '@domain/value-objects/Address.vo.js';
+import { CandidateId } from '@domain/value-objects/CandidateId.vo.js';
 
 const mockCandidateRepository: jest.Mocked<ICandidateRepository> = {
   findByEmail: jest.fn(),
@@ -36,6 +39,7 @@ describe('CreateCandidateUseCase', () => {
       firstName: 'John',
       lastName: 'Doe',
       phone: '123456789',
+      address: '123 Main St',
     };
 
     await expect(createCandidateUseCase.execute(command)).rejects.toThrow(
@@ -53,6 +57,7 @@ describe('CreateCandidateUseCase', () => {
       firstName: 'Jane',
       lastName: 'Doe',
       phone: '987654321',
+      address: '456 Elm St',
     };
 
     await createCandidateUseCase.execute(command);
@@ -62,6 +67,44 @@ describe('CreateCandidateUseCase', () => {
       expect.objectContaining({
         firstName: expect.any(Name),
         lastName: expect.any(Name),
+      })
+    );
+  });
+
+  it('should update an existing candidate if id is provided', async () => {
+    const existingId = '123';
+    const existingCandidate = Candidate.create({
+      id: CandidateId.from(existingId),
+      email: new Email('test@example.com'),
+      phone: new Phone('123456789'),
+      firstName: new Name('John'),
+      lastName: new Name('Doe'),
+      address: new Address('123 Main St'),
+    });
+
+    mockCandidateRepository.findById.mockResolvedValue(existingCandidate);
+
+    const command = {
+      id: existingId,
+      email: 'updated@example.com',
+      firstName: 'Jane',
+      lastName: 'Smith',
+      phone: '987654321',
+      address: '456 Elm St',
+      cvUrl: 'http://example.com/cv.pdf',
+    };
+
+    await createCandidateUseCase.execute(command);
+
+    expect(mockCandidateRepository.findById).toHaveBeenCalledWith(CandidateId.from(existingId));
+    expect(mockCandidateRepository.save).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: expect.any(Email),
+        phone: expect.any(Phone),
+        address: expect.any(Address),
+        firstName: expect.any(Name),
+        lastName: expect.any(Name),
+        cvUrl: 'http://example.com/cv.pdf',
       })
     );
   });

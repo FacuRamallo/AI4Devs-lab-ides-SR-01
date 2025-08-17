@@ -97,6 +97,27 @@ export class Candidate {
     );
   }
 
+  public updateDetails(details: {
+    email: Email;
+    phone: Phone;
+    address: Address;
+    firstName: Name;
+    lastName: Name;
+    cvUrl?: string;
+  }): Candidate {
+    return new Candidate(
+      this.id,
+      details.email,
+      details.phone,
+      details.firstName,
+      details.lastName,
+      details.address,
+      this.workExperiences,
+      this.education,
+      details.cvUrl
+    );
+  }
+
   public getDetails(): {
     id: string;
     email: string;

@@ -27,14 +27,11 @@ export class UploadCandidateCvController {
     }
 
     try {
-      // Extract the ArrayBuffer from the file's buffer
       const { buffer: fileBuffer } = file;
       const arrayBuffer = fileBuffer.buffer.slice(fileBuffer.byteOffset, fileBuffer.byteOffset + fileBuffer.byteLength);
 
-      // Convert the ArrayBuffer to a Buffer
       const buffer = Buffer.from(arrayBuffer);
 
-      // Execute the use case with the candidate ID and the buffer
       const candidateIdObj = CandidateId.from(candidateId);
       const result = await this.uploadCvUseCase.execute(candidateIdObj, buffer);
 
