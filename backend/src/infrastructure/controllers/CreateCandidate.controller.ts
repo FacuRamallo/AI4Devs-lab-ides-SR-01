@@ -15,6 +15,7 @@ export class CreateCandidateController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     try {
+      console.log(`request body: ${JSON.stringify(req.body)}`);
       const { email, firstName, lastName, phone } = req.body;
 
       await this.createCandidateUseCase.execute({ email, firstName, lastName, phone });

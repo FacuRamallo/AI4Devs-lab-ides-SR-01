@@ -12,7 +12,8 @@
         "test": "jest",
         "prisma:init": "npx prisma init",
         "prisma:generate": "npx prisma generate",
-        "start:prod": "node -r tsconfig-paths/register dist/index.js",
+        "prisma:migrate": "npx prisma migrate deploy",
+        "start:prod": "npm run prisma:migrate && node -r tsconfig-paths/register dist/index.js",
         "lint": "eslint 'src/**/*.{ts,tsx}' --fix"
     },
     "keywords": [],
