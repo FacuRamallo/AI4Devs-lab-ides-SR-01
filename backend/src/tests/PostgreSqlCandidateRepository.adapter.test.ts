@@ -4,6 +4,7 @@ import { Email } from '@domain/value-objects/Email.vo.js';
 import { CandidateId } from '@domain/value-objects/CandidateId.vo.js';
 import { Phone } from '@domain/value-objects/Phone.vo.js';
 import { Address } from '@domain/value-objects/Address.vo.js';
+import { Name } from '@domain/value-objects/Name.vo.js';
 
 const mockDatabase: any = {
   candidate: {
@@ -24,11 +25,15 @@ describe('PostgreSqlCandidateRepository', () => {
     const email = new Email('test@example.com');
     const phone = new Phone('123456789');
     const address = new Address('Test Address');
+    const firstName = new Name('John');
+    const lastName = new Name('Doe');
     const candidateData = {
       id: '123',
       email: email.value,
       phone: phone.value,
-      address: address.value
+      firstName: firstName.value,
+      lastName: lastName.value,
+      address: address.value,
     };
     mockDatabase.candidate.findUnique.mockResolvedValue(candidateData);
 
@@ -37,6 +42,8 @@ describe('PostgreSqlCandidateRepository', () => {
     expect(candidate).toBeInstanceOf(Candidate);
     const details = candidate?.getDetails();
     expect(details?.email).toBe(email.value);
+    expect(details?.firstName).toBe(firstName.value);
+    expect(details?.lastName).toBe(lastName.value);
   });
 
   it('should return null if no matching email exists', async () => {
@@ -52,10 +59,14 @@ describe('PostgreSqlCandidateRepository', () => {
   it('should save a candidate correctly', async () => {
     const phone = new Phone('123456789');
     const address = new Address('Test Address');
+    const firstName = new Name('John');
+    const lastName = new Name('Doe');
     const candidate = Candidate.create({
       id: CandidateId.create(),
       email: new Email('save@example.com'),
       phone: phone,
+      firstName: firstName,
+      lastName: lastName,
       address: address,
     });
 
@@ -66,11 +77,15 @@ describe('PostgreSqlCandidateRepository', () => {
       update: expect.objectContaining({
         email: candidate.getDetails().email,
         phone: candidate.getDetails().phone,
+        firstName: candidate.getDetails().firstName,
+        lastName: candidate.getDetails().lastName,
       }),
       create: expect.objectContaining({
         id: candidate.getDetails().id,
         email: candidate.getDetails().email,
         phone: candidate.getDetails().phone,
+        firstName: candidate.getDetails().firstName,
+        lastName: candidate.getDetails().lastName,
       }),
     }));
   });

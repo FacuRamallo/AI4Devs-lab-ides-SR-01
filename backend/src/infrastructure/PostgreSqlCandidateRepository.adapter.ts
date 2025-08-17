@@ -4,6 +4,7 @@ import { Email } from '@domain/value-objects/Email.vo.js';
 import { CandidateId } from '@domain/value-objects/CandidateId.vo.js';
 import { Phone } from '@domain/value-objects/Phone.vo.js';
 import { Address } from '@domain/value-objects/Address.vo.js';
+import { Name } from '@domain/value-objects/Name.vo.js';
 import { PrismaClient } from '@prisma/client';
 
 export class PostgreSqlCandidateRepository implements ICandidateRepository {
@@ -28,6 +29,8 @@ export class PostgreSqlCandidateRepository implements ICandidateRepository {
       id: CandidateId.from(candidateData.id),
       email: new Email(candidateData.email),
       phone: new Phone(candidateData.phone),
+      firstName: new Name(candidateData.firstName),
+      lastName: new Name(candidateData.lastName),
       address: new Address(candidateData.address),
     });
   }
@@ -42,6 +45,8 @@ export class PostgreSqlCandidateRepository implements ICandidateRepository {
       id: CandidateId.from(candidateData.id),
       email: new Email(candidateData.email),
       phone: new Phone(candidateData.phone),
+      firstName: new Name(candidateData.firstName),
+      lastName: new Name(candidateData.lastName),
       address: new Address(candidateData.address),
     });
   }
@@ -53,12 +58,16 @@ export class PostgreSqlCandidateRepository implements ICandidateRepository {
       update: {
         email: details.email,
         phone: details.phone,
+        firstName: details.firstName,
+        lastName: details.lastName,
         address: details.address,
       },
       create: {
         id: details.id,
         email: details.email,
         phone: details.phone,
+        firstName: details.firstName,
+        lastName: details.lastName,
         address: details.address,
       },
     });

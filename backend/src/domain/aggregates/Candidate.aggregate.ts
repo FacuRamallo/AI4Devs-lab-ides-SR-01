@@ -4,11 +4,14 @@ import { Phone } from '../value-objects/Phone.vo.js';
 import { Address } from '../value-objects/Address.vo.js';
 import { WorkExperience } from '../value-objects/WorkExperience.vo.js';
 import { Education } from '../value-objects/Education.vo.js';
+import { Name } from '../value-objects/Name.vo.js';
 
 export class Candidate {
   private readonly id: CandidateId;
   private readonly email: Email;
   private readonly phone: Phone;
+  private readonly firstName: Name;
+  private readonly lastName: Name;
   private readonly address: Address;
   private readonly workExperiences: WorkExperience[] = [];
   private readonly education: Education[] = [];
@@ -18,6 +21,8 @@ export class Candidate {
     id: CandidateId,
     email: Email,
     phone: Phone,
+    firstName: Name,
+    lastName: Name,
     address: Address,
     workExperiences: WorkExperience[] = [],
     education: Education[] = [],
@@ -26,6 +31,8 @@ export class Candidate {
     this.id = id;
     this.email = email;
     this.phone = phone;
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.address = address;
     this.workExperiences = workExperiences;
     this.education = education;
@@ -36,6 +43,8 @@ export class Candidate {
     id: CandidateId;
     email: Email;
     phone: Phone;
+    firstName: Name;
+    lastName: Name;
     address: Address;
     workExperiences?: WorkExperience[];
     education?: Education[];
@@ -45,6 +54,8 @@ export class Candidate {
       params.id,
       params.email,
       params.phone,
+      params.firstName,
+      params.lastName,
       params.address,
       params.workExperiences || [],
       params.education || [],
@@ -60,6 +71,8 @@ export class Candidate {
       this.id,
       this.email,
       this.phone,
+      this.firstName,
+      this.lastName,
       this.address,
       [...this.workExperiences, experience],
       this.education,
@@ -75,6 +88,8 @@ export class Candidate {
       this.id,
       this.email,
       this.phone,
+      this.firstName,
+      this.lastName,
       this.address,
       this.workExperiences,
       this.education,
@@ -86,6 +101,8 @@ export class Candidate {
     id: string;
     email: string;
     phone: string;
+    firstName: string;
+    lastName: string;
     address: string;
     workExperiences: WorkExperience[];
     education: Education[];
@@ -95,6 +112,8 @@ export class Candidate {
       id: this.id.value,
       email: this.email.value,
       phone: this.phone.value,
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
       address: this.address.value,
       workExperiences: this.workExperiences,
       education: this.education,

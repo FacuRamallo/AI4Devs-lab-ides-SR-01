@@ -15,9 +15,9 @@ export class CreateCandidateController {
 
   async handle(req: Request, res: Response): Promise<Response> {
     try {
-      const { email, name, phone } = req.body;
+      const { email, firstName, lastName, phone } = req.body;
 
-      await this.createCandidateUseCase.execute({ email, name, phone });
+      await this.createCandidateUseCase.execute({ email, firstName, lastName, phone });
 
       return res.status(201).json({ message: 'Candidate created successfully' });
     } catch (error) {

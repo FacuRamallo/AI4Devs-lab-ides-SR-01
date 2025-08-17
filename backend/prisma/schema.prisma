@@ -23,6 +23,8 @@ model Candidate {
   id          String           @id @default(uuid())
   email       String           @unique
   phone       String
+  firstName   String
+  lastName    String
   address     String
   cvUrl       String?
   createdAt   DateTime         @default(now())

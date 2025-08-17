@@ -5,10 +5,17 @@ import type { Request, Response, NextFunction } from 'express';
 import { prisma, createCandidateController, uploadCandidateCvController } from '@infrastructure/configuration/dependencyContainer.js';
 import { exec } from 'child_process';
 import multer from 'multer';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
+
+// Enable CORS
+app.use(cors({
+  origin: 'http://localhost:3000', // Allow requests from the frontend
+}));
+
 app.use(express.json());
 const port = process.env.PORT || 3000;
 

@@ -4,13 +4,30 @@ import { Email } from '@domain/value-objects/Email.vo.js';
 import { Phone } from '@domain/value-objects/Phone.vo.js';
 import { Address } from '@domain/value-objects/Address.vo.js';
 import { WorkExperience } from '@domain/value-objects/WorkExperience.vo.js';
+import { Name } from '@domain/value-objects/Name.vo.js';
 
 describe('Candidate Aggregate', () => {
+  it('should create a candidate with firstName and lastName', () => {
+    const candidate = Candidate.create({
+      id: CandidateId.from('123'),
+      email: new Email('test@example.com'),
+      phone: new Phone('+1234567890'),
+      firstName: new Name('John'),
+      lastName: new Name('Doe'),
+      address: new Address('123 Main St')
+    });
+
+    expect(candidate.getDetails().firstName).toBe('John');
+    expect(candidate.getDetails().lastName).toBe('Doe');
+  });
+
   it('should add a work experience if less than 3 exist', () => {
     let candidate = new Candidate(
       CandidateId.from('123'),
       new Email('test@example.com'),
       new Phone('+1234567890'),
+      new Name('John'),
+      new Name('Doe'),
       new Address('123 Main St')
     );
 
@@ -25,6 +42,8 @@ describe('Candidate Aggregate', () => {
       CandidateId.from('123'),
       new Email('test@example.com'),
       new Phone('+1234567890'),
+      new Name('John'),
+      new Name('Doe'),
       new Address('123 Main St')
     );
 
@@ -43,6 +62,8 @@ describe('Candidate Aggregate', () => {
       CandidateId.from('123'),
       new Email('test@example.com'),
       new Phone('+1234567890'),
+      new Name('John'),
+      new Name('Doe'),
       new Address('123 Main St')
     );
 
@@ -56,6 +77,8 @@ describe('Candidate Aggregate', () => {
       CandidateId.from('123'),
       new Email('test@example.com'),
       new Phone('+1234567890'),
+      new Name('John'),
+      new Name('Doe'),
       new Address('123 Main St')
     );
 

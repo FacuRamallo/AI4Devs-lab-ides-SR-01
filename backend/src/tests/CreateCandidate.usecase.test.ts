@@ -2,6 +2,7 @@ import { CreateCandidateUseCase } from '@application/CreateCandidate.usecase.js'
 import { ICandidateRepository } from '@domain/ICandidateRepository.port.js';
 import { Candidate } from '@domain/aggregates/Candidate.aggregate.js';
 import { Email } from '@domain/value-objects/Email.vo.js';
+import { Name } from '@domain/value-objects/Name.vo.js';
 
 const mockCandidateRepository: jest.Mocked<ICandidateRepository> = {
   findByEmail: jest.fn(),
@@ -24,13 +25,16 @@ describe('CreateCandidateUseCase', () => {
         id: expect.anything(),
         email: existingEmail,
         phone: expect.anything(),
+        firstName: new Name('John'),
+        lastName: new Name('Doe'),
         address: expect.anything(),
       })
     );
 
     const command = {
       email: 'test@example.com',
-      name: 'John Doe',
+      firstName: 'John',
+      lastName: 'Doe',
       phone: '123456789',
     };
 
@@ -46,13 +50,19 @@ describe('CreateCandidateUseCase', () => {
 
     const command = {
       email: 'new@example.com',
-      name: 'Jane Doe',
+      firstName: 'Jane',
+      lastName: 'Doe',
       phone: '987654321',
     };
 
     await createCandidateUseCase.execute(command);
 
     expect(mockCandidateRepository.findByEmail).toHaveBeenCalledWith(newEmail);
-    expect(mockCandidateRepository.save).toHaveBeenCalled();
+    expect(mockCandidateRepository.save).toHaveBeenCalledWith(
+      expect.objectContaining({
+        firstName: expect.any(Name),
+        lastName: expect.any(Name),
+      })
+    );
   });
 });

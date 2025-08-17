@@ -6,6 +6,7 @@ import { ICandidateRepository } from '@domain/ICandidateRepository.port.js';
 import { Email } from '@domain/value-objects/Email.vo.js';
 import { Phone } from '@domain/value-objects/Phone.vo.js';
 import { Address } from '@domain/value-objects/Address.vo.js';
+import { Name } from '@domain/value-objects/Name.vo.js';
 
 // Mock repository
 class MockCandidateRepository implements ICandidateRepository {
@@ -36,6 +37,8 @@ describe('UploadCvUseCase Integration Test', () => {
       id: candidateId,
       email: new Email('test@example.com'),
       phone: new Phone('1234567890'),
+      firstName: new Name('John'),
+      lastName: new Name('Doe'),
       address: new Address('123 Test St'),
     });
     await candidateRepository.save(candidate);

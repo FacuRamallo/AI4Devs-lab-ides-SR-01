@@ -4,10 +4,12 @@ import { Email } from '@domain/value-objects/Email.vo.js';
 import { Phone } from '@domain/value-objects/Phone.vo.js';
 import { CandidateId } from '@domain/value-objects/CandidateId.vo.js';
 import { Address } from '@domain/value-objects/Address.vo.js';
+import { Name } from '@domain/value-objects/Name.vo.js';
 
 interface CreateCandidateDTO {
   email: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   phone: string;
 }
 
@@ -27,6 +29,8 @@ export class CreateCandidateUseCase {
       id: CandidateId.create(),
       email,
       phone,
+      firstName: new Name(command.firstName),
+      lastName: new Name(command.lastName),
       address: new Address('Default Address')
     });
 

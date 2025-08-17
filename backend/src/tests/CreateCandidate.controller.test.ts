@@ -21,7 +21,8 @@ describe('CreateCandidateController', () => {
     req = {
       body: {
         email: 'test@example.com',
-        name: 'John Doe',
+        firstName: 'John',
+        lastName: 'Doe',
         phone: '123456789',
       },
     };
@@ -37,7 +38,8 @@ describe('CreateCandidateController', () => {
 
     expect(mockCreateCandidateUseCase.execute).toHaveBeenCalledWith({
       email: 'test@example.com',
-      name: 'John Doe',
+      firstName: 'John',
+      lastName: 'Doe',
       phone: '123456789',
     });
     expect(res.status).toHaveBeenCalledWith(201);
