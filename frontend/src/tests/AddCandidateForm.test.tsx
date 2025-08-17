@@ -1,17 +1,21 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import AddCandidateForm from '../pages/AddCandidateForm';
-import { addCandidate } from '../services/candidateService';
+import { addCandidate, uploadCandidateCv } from '../services/candidateService';
 import { act } from 'react';
 import userEvent from '@testing-library/user-event';
+import axiosInstance from '../services/axiosInstance';
 
 jest.mock('../services/candidateService');
+jest.mock('../services/axiosInstance');
 
 const mockAddCandidate = addCandidate as jest.Mock;
+const mockUploadCandidateCv = uploadCandidateCv as jest.Mock;
 
 describe('AddCandidateForm', () => {
   beforeEach(() => {
     mockAddCandidate.mockReset();
+    mockUploadCandidateCv.mockReset();
   });
 
   it('renders the form fields correctly', () => {
@@ -72,7 +76,7 @@ describe('AddCandidateForm', () => {
 
   it('shows a success message when the CV is uploaded successfully', async () => {
     mockAddCandidate.mockResolvedValueOnce({ id: '123', status: 201 });
-    global.fetch = jest.fn().mockResolvedValueOnce({ ok: true });
+    mockUploadCandidateCv.mockResolvedValueOnce({ ok: true, status: 200 });
 
     render(<AddCandidateForm />);
 
@@ -91,13 +95,13 @@ describe('AddCandidateForm', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByText('CV subido con éxito')).toBeInTheDocument();
+      expect(screen.getByText('Candidato añadido con éxito')).toBeInTheDocument();
     });
   });
 
   it('shows an error message when the CV upload fails', async () => {
     mockAddCandidate.mockResolvedValueOnce({ id: '123', status: 201 });
-    global.fetch = jest.fn().mockResolvedValueOnce({ ok: false });
+    mockUploadCandidateCv.mockRejectedValueOnce(new Error('Failed to upload CV'));
 
     render(<AddCandidateForm />);
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, Grid, TextField, Typography, Snackbar, Alert } from '@mui/material';
-import { addCandidate } from '../services/candidateService';
+import { addCandidate, uploadCandidateCv } from '../services/candidateService';
 
 const AddCandidateForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -49,17 +49,14 @@ const AddCandidateForm: React.FC = () => {
         const formData = new FormData();
         formData.append('file', selectedFile);
 
-        const response = await fetch(`/api/v1/candidates/${result.id}/cv`, {
-          method: 'POST',
-          body: formData,
-        });
+        const response = await uploadCandidateCv(result.id, formData);
 
         if (!response.ok) {
           throw new Error('Error al subir el archivo del CV');
         }
 
         console.log('CV uploaded successfully');
-        setUploadSnackbarMessage('CV subido con éxito');
+        setUploadSnackbarMessage('Candidato añadido con éxito');
         setUploadSnackbarSeverity('success');
         setUploadSnackbarOpen(true);
       } else {
