@@ -69,4 +69,54 @@ describe('AddCandidateForm', () => {
       expect(screen.getByText('Error al añadir candidato')).toBeInTheDocument();
     });
   });
+
+  it('shows a success message when the CV is uploaded successfully', async () => {
+    mockAddCandidate.mockResolvedValueOnce({ id: '123', status: 201 });
+    global.fetch = jest.fn().mockResolvedValueOnce({ ok: true });
+
+    render(<AddCandidateForm />);
+
+    act(() => {
+      userEvent.type(screen.getByLabelText('Nombre del candidato').querySelector('input[name="firstName"]')!, 'John');
+      userEvent.type(screen.getByLabelText('Apellidos del candidato').querySelector('input[name="lastName"]')!, 'Doe');
+      userEvent.type(screen.getByLabelText('Correo electrónico del candidato').querySelector('input[name="email"]')!, 'john.doe@example.com');
+      userEvent.type(screen.getByLabelText('Número de teléfono del candidato').querySelector('input[name="phone"]')!, '1234567890');
+      userEvent.type(screen.getByLabelText('Dirección del candidato').querySelector('input[name="address"]')!, '123 Main St');
+
+      const fileInput = screen.getByLabelText('Seleccionar archivo de CV').querySelector('input[type="file"]') as HTMLElement;
+      const file = new File(['dummy content'], 'example.pdf', { type: 'application/pdf' });
+      userEvent.upload(fileInput, file);
+
+      userEvent.click(screen.getByRole('button', { name: /guardar candidato/i }));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('CV subido con éxito')).toBeInTheDocument();
+    });
+  });
+
+  it('shows an error message when the CV upload fails', async () => {
+    mockAddCandidate.mockResolvedValueOnce({ id: '123', status: 201 });
+    global.fetch = jest.fn().mockResolvedValueOnce({ ok: false });
+
+    render(<AddCandidateForm />);
+
+    act(() => {
+      userEvent.type(screen.getByLabelText('Nombre del candidato').querySelector('input[name="firstName"]')!, 'John');
+      userEvent.type(screen.getByLabelText('Apellidos del candidato').querySelector('input[name="lastName"]')!, 'Doe');
+      userEvent.type(screen.getByLabelText('Correo electrónico del candidato').querySelector('input[name="email"]')!, 'john.doe@example.com');
+      userEvent.type(screen.getByLabelText('Número de teléfono del candidato').querySelector('input[name="phone"]')!, '1234567890');
+      userEvent.type(screen.getByLabelText('Dirección del candidato').querySelector('input[name="address"]')!, '123 Main St');
+
+      const fileInput = screen.getByLabelText('Seleccionar archivo de CV').querySelector('input[type="file"]') as HTMLElement;
+      const file = new File(['dummy content'], 'example.pdf', { type: 'application/pdf' });
+      userEvent.upload(fileInput, file);
+
+      userEvent.click(screen.getByRole('button', { name: /guardar candidato/i }));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Error al subir el CV')).toBeInTheDocument();
+    });
+  });
 });
