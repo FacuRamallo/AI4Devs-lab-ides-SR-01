@@ -88,8 +88,8 @@ const AddCandidateForm: React.FC = () => {
   };
 
   return (
-    <Box sx={{ p: 4 }}>
-      <Typography variant="h4" gutterBottom>
+    <Box sx={{ p: 4, backgroundColor: '#f9f9f9', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}>
+      <Typography variant="h4" gutterBottom sx={{ color: '#333', fontWeight: 'bold' }}>
         Añadir Nuevo Candidato
       </Typography>
       <form onSubmit={handleSubmit}>
@@ -103,6 +103,7 @@ const AddCandidateForm: React.FC = () => {
               onChange={handleChange}
               required
               aria-label="Nombre del candidato"
+              sx={{ backgroundColor: '#fff', borderRadius: '4px' }}
             />
           </Grid>
           <Grid size={{ xs: 12, sm: 6 }}>
@@ -114,6 +115,7 @@ const AddCandidateForm: React.FC = () => {
               onChange={handleChange}
               required
               aria-label="Apellidos del candidato"
+              sx={{ backgroundColor: '#fff', borderRadius: '4px' }}
             />
           </Grid>
           <Grid size={{ xs: 12 }}>
@@ -126,6 +128,7 @@ const AddCandidateForm: React.FC = () => {
               onChange={handleChange}
               required
               aria-label="Correo electrónico del candidato"
+              sx={{ backgroundColor: '#fff', borderRadius: '4px' }}
             />
           </Grid>
           <Grid size={{ xs: 12 }}>
@@ -137,6 +140,7 @@ const AddCandidateForm: React.FC = () => {
               onChange={handleChange}
               required
               aria-label="Número de teléfono del candidato"
+              sx={{ backgroundColor: '#fff', borderRadius: '4px' }}
             />
           </Grid>
           <Grid size={{ xs: 12 }}>
@@ -148,6 +152,7 @@ const AddCandidateForm: React.FC = () => {
               onChange={handleChange}
               required
               aria-label="Dirección del candidato"
+              sx={{ backgroundColor: '#fff', borderRadius: '4px' }}
             />
           </Grid>
           <Grid size={{ xs: 12 }}>
@@ -155,9 +160,10 @@ const AddCandidateForm: React.FC = () => {
               variant="contained"
               component="label"
               color="secondary"
-              aria-label="Seleccionar archivo de CV"
+              aria-label="Subir archivo de CV"
+              sx={{ textTransform: 'none', fontWeight: 'bold' }}
             >
-              Seleccionar Archivo
+              Subir CV
               <input
                 type="file"
                 hidden
@@ -166,14 +172,17 @@ const AddCandidateForm: React.FC = () => {
               />
             </Button>
             {selectedFile && (
-              <Typography variant="body2" sx={{ mt: 1 }}>
+              <Typography variant="body2" sx={{ mt: 1, color: '#555' }}>
                 Archivo seleccionado: {selectedFile.name}
               </Typography>
             )}
+            <Typography variant="caption" sx={{ display: 'block', mt: 1, color: '#888' }}>
+              Por favor, suba un archivo en formato PDF o DOCX.
+            </Typography>
           </Grid>
         </Grid>
-        <Box sx={{ mt: 3 }}>
-          <Button type="submit" variant="contained" color="primary">
+        <Box sx={{ mt: 3, textAlign: 'right' }}>
+          <Button type="submit" variant="contained" color="primary" sx={{ textTransform: 'none', fontWeight: 'bold' }}>
             Guardar Candidato
           </Button>
         </Box>
