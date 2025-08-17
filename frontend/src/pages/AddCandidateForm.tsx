@@ -42,29 +42,29 @@ const AddCandidateForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const result = await addCandidate(formData);
-      console.log('Candidate added successfully:', result);
+      const candidateId = await addCandidate(formData);
+      console.log('Candidate added successfully:', candidateId.id);
 
       if (selectedFile) {
-        const formData = new FormData();
-        formData.append('file', selectedFile);
-
-        const response = await uploadCandidateCv(result.id, formData);
+        const fileData = new FormData();
+        fileData.append('file', selectedFile);
+        console.log('Uploading CV for candidate:', candidateId.id);
+        const response = await uploadCandidateCv(candidateId.id, fileData);
 
         if (!response.ok) {
           throw new Error('Error al subir el archivo del CV');
         }
 
-        console.log('CV uploaded successfully');
-        setUploadSnackbarMessage('Candidato añadido con éxito');
-        setUploadSnackbarSeverity('success');
-        setUploadSnackbarOpen(true);
-      } else {
+        const result = await addCandidate({ ...formData, cvUrl: response.url });
+        console.log('Candidate added successfully:', result);
         setSnackbarMessage('Candidato añadido con éxito');
+        setSnackbarSeverity('success');
+        setSnackbarOpen(true);
+      } else {
+        setSnackbarMessage('Es necesario subir su Cv');
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
       }
-
-      setSnackbarSeverity('success');
-      setSnackbarOpen(true);
     } catch (error) {
       console.error('Failed to add candidate or upload CV:', error);
       setSnackbarMessage('Error al añadir candidato');
