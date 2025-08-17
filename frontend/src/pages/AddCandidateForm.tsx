@@ -48,14 +48,14 @@ const AddCandidateForm: React.FC = () => {
       if (selectedFile) {
         const fileData = new FormData();
         fileData.append('file', selectedFile);
-        console.log('Uploading CV for candidate:', candidateId.id);
+        console.log('Uploading CV for candidate:', candidateId.id, fileData.keys);
         const response = await uploadCandidateCv(candidateId.id, fileData);
-
-        if (!response.ok) {
+        console.log('CV upload response:', response);
+        if (!response.data.url) {
           throw new Error('Error al subir el archivo del CV');
         }
 
-        const result = await addCandidate({ ...formData, cvUrl: response.url });
+        const result = await addCandidate({ ...formData, cvUrl: response.data.url, id: candidateId.id });
         console.log('Candidate added successfully:', result);
         setSnackbarMessage('Candidato añadido con éxito');
         setSnackbarSeverity('success');

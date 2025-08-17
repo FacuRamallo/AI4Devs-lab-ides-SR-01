@@ -8,7 +8,7 @@ export class UploadCvUseCase {
     private readonly fileStorage: IFileStorage
   ) {}
 
-  public async execute(candidateId: CandidateId, fileBuffer: Buffer): Promise<void> {
+  public async execute(candidateId: CandidateId, fileBuffer: Buffer): Promise<string> {
     const cvUrl = await this.fileStorage.upload(fileBuffer, `candidates/${candidateId.value}/cv`);
 
     const candidate = await this.candidateRepository.findById(candidateId);
@@ -19,5 +19,6 @@ export class UploadCvUseCase {
     const updatedCandidate = candidate.assignCv(cvUrl);
 
     await this.candidateRepository.save(updatedCandidate);
+    return cvUrl;
   }
 }
