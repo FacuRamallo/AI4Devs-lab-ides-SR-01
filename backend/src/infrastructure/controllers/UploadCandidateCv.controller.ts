@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import multer from 'multer';
 import { UploadCvUseCase } from '@application/UploadCv.usecase.js';
 import { CandidateId } from '@domain/value-objects/CandidateId.vo.js';
-import { Readable } from 'stream';
 import { MulterRequest } from '@infrastructure/controllers/types/MulterRequest.js';
 
 export class UploadCandidateCvController {
