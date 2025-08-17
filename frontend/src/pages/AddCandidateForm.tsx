@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Grid, TextField, Typography, Snackbar, Alert } from '@mui/material';
 import { addCandidate } from '../services/candidateService';
 
 const AddCandidateForm: React.FC = () => {
@@ -10,6 +10,9 @@ const AddCandidateForm: React.FC = () => {
     phone: '',
     address: '',
   });
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState<'success' | 'error' | undefined>(undefined);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -21,9 +24,19 @@ const AddCandidateForm: React.FC = () => {
     try {
       const result = await addCandidate(formData);
       console.log('Candidate added successfully:', result);
+      setSnackbarMessage('Candidato añadido con éxito');
+      setSnackbarSeverity('success');
+      setSnackbarOpen(true);
     } catch (error) {
       console.error('Failed to add candidate:', error);
+      setSnackbarMessage('Error al añadir candidato');
+      setSnackbarSeverity('error');
+      setSnackbarOpen(true);
     }
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   return (
@@ -41,6 +54,7 @@ const AddCandidateForm: React.FC = () => {
               value={formData.firstName}
               onChange={handleChange}
               required
+              aria-label="Nombre del candidato"
             />
           </Grid>
           <Grid size= {{xs: 12, sm: 6}}>
@@ -51,6 +65,7 @@ const AddCandidateForm: React.FC = () => {
               value={formData.lastName}
               onChange={handleChange}
               required
+              aria-label="Apellidos del candidato"
             />
           </Grid>
           <Grid size= {{xs: 12}}>
@@ -62,6 +77,7 @@ const AddCandidateForm: React.FC = () => {
               value={formData.email}
               onChange={handleChange}
               required
+              aria-label="Correo electrónico del candidato"
             />
           </Grid>
           <Grid size= {{xs: 12}}>
@@ -72,6 +88,7 @@ const AddCandidateForm: React.FC = () => {
               value={formData.phone}
               onChange={handleChange}
               required
+              aria-label="Número de teléfono del candidato"
             />
           </Grid>
           <Grid size= {{xs: 12}}>
@@ -82,6 +99,7 @@ const AddCandidateForm: React.FC = () => {
               value={formData.address}
               onChange={handleChange}
               required
+              aria-label="Dirección del candidato"
             />
           </Grid>
         </Grid>
@@ -91,6 +109,16 @@ const AddCandidateForm: React.FC = () => {
           </Button>
         </Box>
       </form>
+      <Snackbar
+        open={snackbarOpen}
+        onClose={handleSnackbarClose}
+        autoHideDuration={6000}
+        role="alert"
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
