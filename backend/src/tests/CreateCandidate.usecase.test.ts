@@ -108,4 +108,57 @@ describe('CreateCandidateUseCase', () => {
       })
     );
   });
+
+  it('should correctly handle workExperiences and education when creating a candidate', async () => {
+    const newEmail = new Email('new@example.com');
+    mockCandidateRepository.findByEmail.mockResolvedValue(null);
+
+    const command = {
+      email: 'new@example.com',
+      firstName: 'Jane',
+      lastName: 'Doe',
+      phone: '987654321',
+      address: '456 Elm St',
+      workExperiences: [
+        {
+          company: 'Company A',
+          role: 'Developer',
+          startDate: new Date('2020-01-01'),
+          endDate: new Date('2021-01-01'),
+        },
+      ],
+      education: [
+        {
+          institution: 'University A',
+          degree: 'Bachelor of Science',
+          startDate: new Date('2015-01-01'),
+          endDate: new Date('2019-01-01'),
+        },
+      ],
+    };
+
+    await createCandidateUseCase.execute(command);
+
+    expect(mockCandidateRepository.findByEmail).toHaveBeenCalledWith(newEmail);
+    expect(mockCandidateRepository.save).toHaveBeenCalledWith(
+      expect.objectContaining({
+        workExperiences: expect.arrayContaining([
+          expect.objectContaining({
+            details: expect.objectContaining({
+              company: 'Company A',
+              role: 'Developer',
+            }),
+          }),
+        ]),
+        education: expect.arrayContaining([
+          expect.objectContaining({
+            details: expect.objectContaining({
+              institution: 'University A',
+              degree: 'Bachelor of Science',
+            }),
+          }),
+        ]),
+      })
+    );
+  });
 });

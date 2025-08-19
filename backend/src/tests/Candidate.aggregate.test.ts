@@ -5,6 +5,7 @@ import { Phone } from '@domain/value-objects/Phone.vo.js';
 import { Address } from '@domain/value-objects/Address.vo.js';
 import { WorkExperience } from '@domain/value-objects/WorkExperience.vo.js';
 import { Name } from '@domain/value-objects/Name.vo.js';
+import { Education } from '@domain/value-objects/Education.vo.js';
 
 describe('Candidate Aggregate', () => {
   it('should create a candidate with firstName and lastName', () => {
@@ -85,5 +86,23 @@ describe('Candidate Aggregate', () => {
     expect(() => {
       candidate.assignCv('');
     }).toThrow('CV URL cannot be empty.');
+  });
+
+  it('should include education in the candidate details', () => {
+    const candidate = Candidate.create({
+      id: CandidateId.from('123'),
+      email: new Email('test@example.com'),
+      phone: new Phone('+1234567890'),
+      firstName: new Name('John'),
+      lastName: new Name('Doe'),
+      address: new Address('123 Main St'),
+      education: [
+        new Education('University A', 'Bachelor of Science', new Date('2015-01-01'), new Date('2019-01-01')),
+      ],
+    });
+
+    const details = candidate.getDetails();
+    expect(details.education).toHaveLength(1);
+    expect(details.education[0].details.institution).toBe('University A');
   });
 });
